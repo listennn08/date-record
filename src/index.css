@@ -1,0 +1,10 @@
+*, *::before, *::after {
+  @apply box-border;
+}
+body {
+  @apply bg-primary text-secondary;
+}
+
+#root {
+  @apply w-screen h-screen;
+}
