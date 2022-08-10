@@ -56,6 +56,7 @@ const Calendar = ({ value, onChange, show, setShow }: IProps) => {
     const key = dayjs(`${point.year()}-${point.month() + 1}-${d}`)
     return (
       <button
+        type="button"
         bg="hover:primary"
         border="1 rounded"
         className={`${isToday(key) ? 'border-primary' : 'border-transparent'} ${
@@ -115,6 +116,7 @@ const Calendar = ({ value, onChange, show, setShow }: IProps) => {
     month: monthEnum.map((el, i) => {
       return (
         <button
+          type="button"
           bg="hover:primary"
           border="1 rounded"
           className={`${i === point.month() ? 'border-primary' : 'border-transparent'}`}
@@ -129,6 +131,7 @@ const Calendar = ({ value, onChange, show, setShow }: IProps) => {
         const yy = point.year() - 5 + i
         return (
           <button
+            type="button"
             bg="hover:primary"
             border="1 rounded"
             className={`${yy === point.year() ? 'border-primary' : 'border-transparent'}`}
@@ -142,6 +145,7 @@ const Calendar = ({ value, onChange, show, setShow }: IProps) => {
         const yy = point.year() + i + 1
         return (
           <button
+            type="button"
             bg="hover:primary"
             border="1 rounded transparent"
             onClick={() => toType('year', yy)}
@@ -163,10 +167,11 @@ const Calendar = ({ value, onChange, show, setShow }: IProps) => {
       z="99" grid="~ cols-7" text="center" border="rounded-md" shadow="~"
     >
       <div grid="~ cols-7 col-span-7">
-        <button flex="~" items="center" justify="center" onClick={prev}>
+        <button type="button" flex="~" items="center" justify="center" onClick={prev}>
           <IconChevronLeft />
         </button>
         <button
+          type="button"
           onClick={changeCalendarType}
           grid="col-span-5"
           flex="~"
@@ -175,7 +180,7 @@ const Calendar = ({ value, onChange, show, setShow }: IProps) => {
         >
           {monthEnum[point.month()]} {point.year()}
         </button>
-        <button  flex="~" items="center" justify="center"  onClick={next}>
+        <button type="button" flex="~" items="center" justify="center" onClick={next}>
           <IconChevronRight />
         </button>
       </div>
