@@ -2,7 +2,6 @@ import { openDB } from 'idb'
 import { v4 as uuid } from 'uuid'
 
 import type { DBSchema, IDBPDatabase } from 'idb'
-import { invariant } from 'react-router/lib/router'
 
 export type TDateRecord = {
   id: string
@@ -15,6 +14,7 @@ export type TDateRecord = {
 export type TDBFunc = {
   get(key?: string): Promise<TDateRecord | TDateRecord[] | undefined>
   set(value: Partial<TDateRecord>): void
+  delete(id: string): void
 }
 
 interface IRecordDB extends DBSchema {
@@ -47,7 +47,7 @@ export const useIDB = async () => {
     },
     set(value) {
       if (value.id) {
-        db.delete("dateRecord", value.id)
+        db.delete('dateRecord', value.id)
         return db.add('dateRecord', value as TDateRecord)
       }
       const data = {
@@ -58,7 +58,10 @@ export const useIDB = async () => {
         endDate: value?.endDate,
       }
       return db.add('dateRecord', data)
-    }
+    },
+    async delete(id: string) {
+      await db.delete('dateRecord', id)
+    },
   }
 
   return { ...dateRecord }

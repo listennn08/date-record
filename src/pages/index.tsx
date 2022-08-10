@@ -16,6 +16,10 @@ export default function Index() {
     setEvents((await obj.get())
       .sort((a: TDateRecord, b: TDateRecord) => a.isEnd - b.isEnd))
   }
+  const deleteData = async (id: string) => {
+    await obj.delete(id)
+    await getData()
+  }
 
   useEffect(() => {
     if (!obj) {
@@ -57,7 +61,13 @@ export default function Index() {
               <DayCount {...el} />
             </Link>
             {edit && (
-              <button m="l-2" flex="~" items="center" text="red-600">
+              <button
+                onClick={() => deleteData(el.id)}
+                m="l-2"
+                flex="~"
+                items="center"
+                text="red-600"
+              >
                 <IconClose />
               </button>
             )}
