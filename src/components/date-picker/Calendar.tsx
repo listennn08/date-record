@@ -106,61 +106,6 @@ const Calendar = ({ value, onChange, show, setShow }: IProps) => {
     }
   }
 
-  const body: { [key: string]: ReactNode } = {
-    date: (
-      <>
-        {weekdayEnum.map((el) => <div p="1" cursor="default" key={el}>{el}</div>)}
-        {days}
-      </>
-    ),
-    month: monthEnum.map((el, i) => {
-      return (
-        <button
-          type="button"
-          bg="hover:primary"
-          border="1 rounded"
-          className={`${i === point.month() ? 'border-primary' : 'border-transparent'}`}
-          onClick={() => toType('month', i)}
-        >
-          {el}
-        </button>
-      )
-    }),
-    year: [
-      ...Array.from({ length: 6 }).map((_, i) => {
-        const yy = point.year() - 5 + i
-        return (
-          <button
-            type="button"
-            bg="hover:primary"
-            border="1 rounded"
-            className={`${yy === point.year() ? 'border-primary' : 'border-transparent'}`}
-            onClick={() => toType('year', yy)}
-          >
-            {yy}
-          </button>
-        )
-      }),
-      ...Array.from({ length: 10 }).map((_, i) => {
-        const yy = point.year() + i + 1
-        return (
-          <button
-            type="button"
-            bg="hover:primary"
-            border="1 rounded transparent"
-            onClick={() => toType('year', yy)}
-          >
-            {yy}
-          </button>
-        )
-      })
-    ],
-  }
-  const bodyStyle: { [key: string]: string } = {
-    date: 'grid-cols-7',
-    month: 'grid-cols-3',
-    year: 'grid-cols-4',
-  }
   return (
     <div
       pos="absolute right-0" w="full" min-w="250px" bg="white" m="t-1" p="1"
@@ -184,11 +129,55 @@ const Calendar = ({ value, onChange, show, setShow }: IProps) => {
           <IconChevronRight />
         </button>
       </div>
-      <div
-        grid="~ col-span-7"
-        className={bodyStyle[calendarType]}
-      >
-        {body[calendarType]}
+      <div grid="col-span-7">
+        <div grid="~ cols-7" className={`${calendarType !== 'date' && 'hidden'}`}>
+          {weekdayEnum.map((el) => <div p="1" cursor="default" key={el}>{el}</div>)}
+          {days}
+        </div>
+        <div grid="~ cols-4" className={`${calendarType !== 'month' && 'hidden'}`}>
+          {monthEnum.map((el, i) => (
+            <button
+              type="button"
+              bg="hover:primary"
+              border="1 rounded"
+              className={`${i === point.month() ? 'border-primary' : 'border-transparent'}`}
+              onClick={() => toType('month', i)}
+            >
+              {el}
+            </button>
+          ))}
+        </div>
+        <div grid="~ cols-4" className={`${calendarType !== 'year' && 'hidden'}`}>
+          {[
+            ...Array.from({ length: 6 }).map((_, i) => {
+              const yy = point.year() - 5 + i
+              return (
+                <button
+                  type="button"
+                  bg="hover:primary"
+                  border="1 rounded"
+                  className={`${yy === point.year() ? 'border-primary' : 'border-transparent'}`}
+                  onClick={() => toType('year', yy)}
+                >
+                  {yy}
+                </button>
+              )
+            }),
+            ...Array.from({ length: 10 }).map((_, i) => {
+              const yy = point.year() + i + 1
+              return (
+                <button
+                  type="button"
+                  bg="hover:primary"
+                  border="1 rounded transparent"
+                  onClick={() => toType('year', yy)}
+                >
+                  {yy}
+                </button>
+              )
+            })
+          ]}
+        </div>
       </div>
     </div>
   )

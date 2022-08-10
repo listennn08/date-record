@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { createContext, Dispatch, SetStateAction } from 'react'
 import { formatDate } from '../../utils'
 import Input from '../input'
 import Calendar from './Calendar'
@@ -25,7 +26,8 @@ const DatePicker = ({ id, value, onChange, error, errorMessage }: IProps) => {
         setShow(false)
       }
     }
-    
+
+    document.removeEventListener('click', clickOutside)
     document.addEventListener('click', clickOutside)
     return () => {
       document.removeEventListener('click', clickOutside)
